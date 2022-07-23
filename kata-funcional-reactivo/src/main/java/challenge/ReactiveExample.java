@@ -4,6 +4,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
@@ -42,9 +43,8 @@ public class ReactiveExample {
 
 
     //TODO: mayor puntaje de estudiante
-    public Flux mayorPuntajeDeEstudiante(int limit) {
-        return estudianteList.filter( estudiante -> estudiante.getPuntaje() == limit)
-                .map(estudiante -> Map.of(estudiante.getNombre() , estudiante.getPuntaje()));
+    public Flux <Estudiante> mayorPuntajeDeEstudiante(int limit) {
+        return estudianteList.sort(Comparator.reverseOrder()).limitRate(limit);
      }
 
     //TODO: total de asisntencias de estudiantes con mayor puntaje basado en un  valor

@@ -7,6 +7,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import reactor.test.StepVerifier;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -25,9 +26,10 @@ class ReactiveExampleTest {
 
     @Test
     void mayorPuntajeDeEstudiante(){
-        StepVerifier.create(reactiveExample.mayorPuntajeDeEstudiante(35))
-                .expectNext("{andres=35}")
-                .verifyComplete();
+        StepVerifier.create(reactiveExample.mayorPuntajeDeEstudiante(1))
+                .expectNextMatches(estudiante -> estudiante.getNombre().equals("andres"))
+                .expectComplete()
+                .verify();
     }
 
     @Test
@@ -55,8 +57,9 @@ class ReactiveExampleTest {
     @Test
     void losNombresDeEstudianteConPuntajeMayorA(){
         StepVerifier.create(reactiveExample.losNombresDeEstudianteConPuntajeMayorA(30))
-                .expectNext("juan")
-                .verifyComplete();
+                .expectNext("andres" , "juan" , "pedro" , "santiago")
+                .expectComplete()
+                .verify();
     }
 
     @Test
